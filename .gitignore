@@ -1,0 +1,5 @@
+node_modules/
+mock_db.json
+.env
+*.log
+uploads/
