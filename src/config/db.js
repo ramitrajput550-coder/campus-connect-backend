@@ -34,7 +34,7 @@ if (!fs.existsSync(MOCK_DB_PATH)) {
 global.dbFallback = false;
 
 const connectDB = async () => {
-  const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/campus_net';
+  const mongoURI = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/campus_net';
   
   console.log('Connecting to MongoDB...');
   try {

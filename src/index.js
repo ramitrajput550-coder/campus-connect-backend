@@ -43,6 +43,17 @@ app.get('/', (req, res) => {
   res.json({ message: 'CampusNet API is running successfully!', fallbackMode: global.dbFallback });
 });
 
+// Temporary endpoint to seed database in the cloud
+app.get('/api/seed-db', async (req, res) => {
+  try {
+    const seedData = require('./config/seed');
+    await seedData();
+    res.json({ message: 'Database seeded successfully!' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Socket.io Real-time Event Management
 io.on('connection', (socket) => {
   console.log('New client connected:', socket.id);
