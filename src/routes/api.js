@@ -15,6 +15,17 @@ const adminController = require('../controllers/adminController');
 const communityController = require('../controllers/communityController');
 const aiController = require('../controllers/aiController');
 
+// --- Public Seeding Route ---
+router.get('/seed-db', async (req, res) => {
+  try {
+    const seedData = require('../config/seed');
+    await seedData();
+    res.json({ message: 'Database seeded successfully!' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // --- Auth Routes ---
 router.post('/auth/register', authController.register);
 router.post('/auth/login', authController.login);
