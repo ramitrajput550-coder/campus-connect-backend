@@ -2,6 +2,10 @@ const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
+
+// Bypasses Indian ISP DNS SRV blocks for MongoDB Atlas connection
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 const User = require('../models/User');
 const Post = require('../models/Post');
 const Connection = require('../models/Connection');

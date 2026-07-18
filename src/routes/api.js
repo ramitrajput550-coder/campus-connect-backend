@@ -120,4 +120,10 @@ router.post('/ai/chat', auth, aiController.chat);
 router.post('/ai/resume-review', auth, aiController.resumeReview);
 router.get('/ai/recommendations', auth, aiController.getRecommendations);
 
+// --- Member Role Divisions (New Routes) ---
+router.use('/student', auth, require('./studentRoutes'));
+router.use('/alumni', auth, require('./alumniRoutes'));
+router.use('/faculty', auth, require('./facultyRoutes'));
+router.use('/admin-role', auth, require('./adminRoutes'));
+
 module.exports = router;
