@@ -40,7 +40,11 @@ app.use('/api', apiRoutes);
 
 // Simple health check endpoint
 app.get('/', (req, res) => {
-  res.json({ message: 'CampusNet API is running successfully!', fallbackMode: global.dbFallback });
+  res.json({ 
+    message: 'CampusNet API is running successfully!', 
+    fallbackMode: global.dbFallback,
+    dbError: global.dbError || null 
+  });
 });
 
 // Temporary endpoint to seed database in the cloud

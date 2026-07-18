@@ -44,10 +44,11 @@ const connectDB = async () => {
   try {
     // Attempt connection with a short timeout to prevent hanging if MongoDB is not running
     await mongoose.connect(mongoURI, {
-      serverSelectionTimeoutMS: 2000 // 2 seconds timeout
+      serverSelectionTimeoutMS: 5000 // 5 seconds timeout
     });
     console.log('MongoDB connected successfully!');
     global.dbFallback = false;
+    global.dbError = null;
   } catch (error) {
     console.warn('\n======================================================');
     console.warn('WARNING: Failed to connect to MongoDB.');
@@ -55,6 +56,7 @@ const connectDB = async () => {
     console.warn('FALLBACK: Using local JSON database (mock_db.json) instead.');
     console.warn('======================================================\n');
     global.dbFallback = true;
+    global.dbError = error.message;
   }
 };
 
