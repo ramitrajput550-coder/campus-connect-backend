@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 
+// Override DNS server to bypass SRV query blocks on Render/WiFi
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 const MOCK_DB_PATH = path.join(__dirname, '..', '..', 'mock_db.json');
 
 // Initial seed template for mock database fallback
