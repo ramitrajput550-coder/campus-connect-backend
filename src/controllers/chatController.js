@@ -17,8 +17,9 @@ const chatController = {
 
       // Find sender profile to return for real-time display
       const sender = await dbHelper.findById(User, senderId);
+      const messageData = typeof message.toObject === 'function' ? message.toObject() : message;
       const formattedMessage = {
-        ...message,
+        ...messageData,
         sender: {
           id: sender._id.toString(),
           profile: sender.profile
@@ -62,8 +63,9 @@ const chatController = {
       const populated = [];
       for (let msg of messages) {
         const senderUser = await dbHelper.findById(User, msg.sender);
+        const msgData = typeof msg.toObject === 'function' ? msg.toObject() : msg;
         populated.push({
-          ...msg,
+          ...msgData,
           sender: senderUser ? {
             id: senderUser._id.toString(),
             profile: senderUser.profile
