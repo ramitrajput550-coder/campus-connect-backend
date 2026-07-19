@@ -62,7 +62,7 @@ router.get('/referrals/applications', auth, referralController.getApplications);
 router.put('/referrals/applications/:applicationId', auth, referralController.updateApplicationStatus);
 
 // --- Events Routes ---
-router.post('/events', auth, eventController.createEvent);
+router.post('/events', auth, authorize('admin'), eventController.createEvent);
 router.get('/events', auth, eventController.getEvents);
 router.put('/events/:eventId/rsvp', auth, eventController.rsvpEvent);
 
