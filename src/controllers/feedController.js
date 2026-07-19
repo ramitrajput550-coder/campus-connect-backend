@@ -75,8 +75,9 @@ const feedController = {
             userHeadline = 'Platform Administrator';
           }
         }
+        const postData = typeof post.toObject === 'function' ? post.toObject() : post;
         return {
-          ...post,
+          ...postData,
           userHeadline
         };
       }));

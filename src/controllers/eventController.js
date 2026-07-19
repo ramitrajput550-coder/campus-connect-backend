@@ -37,8 +37,9 @@ const eventController = {
       const populated = [];
       for (let ev of events) {
         const organizerUser = await dbHelper.findById(User, ev.organizer);
+        const evData = typeof ev.toObject === 'function' ? ev.toObject() : ev;
         populated.push({
-          ...ev,
+          ...evData,
           organizer: organizerUser ? { id: organizerUser._id.toString(), profile: organizerUser.profile } : null
         });
       }
