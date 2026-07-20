@@ -88,27 +88,12 @@ router.put('/admin/posts/:postId', auth, authorize('admin'), adminController.edi
 
 // --- Upload Route ---
 router.post('/upload', auth, (req, res) => {
-  const fs = require('fs');
-  const path = require('path');
   const { image } = req.body;
   if (!image) return res.status(400).json({ msg: 'No image data provided' });
 
   try {
-    const matches = image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    if (!matches || matches.length !== 3) {
-      return res.status(400).json({ msg: 'Invalid image data' });
-    }
-
-    const buffer = Buffer.from(matches[2], 'base64');
-    const filename = `img_${Date.now()}.png`;
-    const uploadPath = path.join(__dirname, '..', 'public', 'uploads');
-
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
-
-    fs.writeFileSync(path.join(uploadPath, filename), buffer);
-    res.json({ url: `/uploads/${filename}` });
+    // Return the base64 image data directly so it is saved in MongoDB persistently
+    res.json({ url: image });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'File upload failed' });
