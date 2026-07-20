@@ -14,7 +14,7 @@ const mentorshipController = {
       }
 
       const session = await dbHelper.create(Mentorship, {
-        student: studentId,
+        mentee: studentId,
         mentor: mentorId,
         sessionType,
         description,
@@ -36,7 +36,7 @@ const mentorshipController = {
     try {
       let query = {};
       if (userRole === 'student') {
-        query.student = userId;
+        query.mentee = userId;
       } else if (userRole === 'alumni') {
         query.mentor = userId;
       }
@@ -48,11 +48,12 @@ const mentorshipController = {
       // Populate manually for fallback safety, or using standard populates
       const populated = [];
       for (let s of sessions) {
-        const studentUser = await dbHelper.findById(User, s.student);
-        const mentorUser = await dbHelper.findById(User, s.mentor);
+        const sData = typeof s.toObject === 'function' ? s.toObject() : s;
+        const studentUser = await dbHelper.findById(User, sData.mentee);
+        const mentorUser = await dbHelper.findById(User, sData.mentor);
         
         populated.push({
-          ...s,
+          ...sData,
           student: studentUser ? { id: studentUser._id.toString(), profile: studentUser.profile } : null,
           mentor: mentorUser ? { id: mentorUser._id.toString(), profile: mentorUser.profile } : null
         });
